@@ -3,7 +3,7 @@ import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 const Navbar = () => {
   return (
-    <div className="flex w-full items-center justify-center bg-black text-white">
+    <div className="flex w-full items-center justify-center border-b-2">
       <div className="flex w-2/3 items-center justify-between">
         <h1 className="text-lg font-semibold">Navbar title</h1>
         <div className="flex items-center justify-center gap-10 p-5">
