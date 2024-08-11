@@ -1,6 +1,7 @@
 import Functionality from "./components/Functionality";
 import Navbar from "./components/Navbar";
 import Habits from "./components/Habits";
+import Test from "./components/Test";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <Navbar />
       <Functionality />
       <Habits />
+      <Test />
     </div>
   );
 }
