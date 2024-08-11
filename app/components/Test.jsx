@@ -22,6 +22,7 @@ const Test = () => {
       <div className="mt-10 flex gap-5">
         {items.map((item) => (
           <div
+            key={item.id}
             className="flex h-10 w-10"
             onClick={() =>
               updateCompleted({ idToUpdate: item.id, newData: !item.completed })
