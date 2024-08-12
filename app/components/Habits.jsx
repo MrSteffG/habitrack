@@ -8,6 +8,10 @@ const Habits = () => {
       habitId: 1,
       habit: "Excercise",
     },
+    {
+      habitId: 2,
+      habit: "Excercise Harder",
+    },
   ]);
 
   const [completed, setCompleted] = useState([
@@ -74,6 +78,13 @@ const Habits = () => {
       habitId: 1,
       done: true,
     },
+    {
+      id: 9,
+      completionDay: "Tue",
+      completionDate: "13",
+      habitId: 2,
+      done: true,
+    },
   ]);
 
   const toggleCompleted = ({ idToUpdate, newData }) => {
@@ -108,14 +119,29 @@ const Habits = () => {
     );
   };
 
+  const showCompletedHabits = (item) =>
+    habits.map((habit) => {
+      if (habit.habitId === item.habitId) {
+        return (
+          <div
+            key={completed.id}
+            className="flex h-10 w-10 items-center justify-center rounded-sm bg-green-200 text-black"
+          ></div>
+        );
+      } else {
+        return;
+      }
+    });
+
   const showSquares = completed.map((item) => (
     <div className="flex flex-col gap-5" key={item.id}>
       <div className="flex h-10 w-10 flex-col items-center" key={item.id}>
         <div key={item.id}>{item.completionDay}</div>
         {item.completionDate}
       </div>
+      {showCompletedHabits(item)}
 
-      <div className="flex flex-col items-center justify-center">
+      {/* <div className="flex flex-col items-center justify-center">
         {item.done ? (
           <div
             onClick={() =>
@@ -131,19 +157,19 @@ const Habits = () => {
             className="flex h-10 w-10 items-center justify-center rounded-sm bg-slate-100 bg-opacity-20 text-black"
           ></div>
         )}
-      </div>
+      </div> */}
     </div>
   ));
 
   return (
-    <div className="flex w-3/5 gap-5 rounded-lg bg-purple-400 bg-opacity-50 bg-gradient-to-r from-blue-400 p-3 font-semibold text-white">
-      <div className="flex flex-col justify-end gap-5">
-        <div className="flex h-10 items-center"></div>
+    <div className="flex w-1/3 gap-5 rounded-lg bg-gradient-to-r from-blue-400 to-purple-300 p-3 font-semibold text-white">
+      <div className="flex flex-col gap-5">
+        <div className="flex h-10 items-center">Habits</div>
         {showHabits}
         <AddHabit />
       </div>
 
-      <div className="flex gap-1 overflow-auto object-right">{showSquares}</div>
+      <div className="flex gap-1 overflow-x-auto">{showSquares}</div>
     </div>
   );
 };
