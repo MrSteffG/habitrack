@@ -92,11 +92,23 @@ const HabitsTest = () => {
       if (habit.habitId === item.habitId) {
         if (item.done === true) {
           return (
-            <div className="flex h-10 w-10 bg-green-100" key={item.id}></div>
+            <div
+              onClick={() =>
+                toggleCompleted({ idToUpdate: item.id, newData: !item.done })
+              }
+              className="flex h-10 w-10 items-center justify-center rounded-sm bg-green-200"
+              key={item.id}
+            ></div>
           );
         } else if (item.done === false) {
           return (
-            <div className="flex h-10 w-10 bg-red-100" key={item.id}></div>
+            <div
+              onClick={() =>
+                toggleCompleted({ idToUpdate: item.id, newData: !item.done })
+              }
+              className="flex h-10 w-10 items-center justify-center rounded-sm bg-slate-100 bg-opacity-20"
+              key={item.id}
+            ></div>
           );
         }
       } else {
@@ -110,18 +122,32 @@ const HabitsTest = () => {
     </div>
   ));
 
+  const showHabitDates = completed.map((item) => (
+    <div className="flex h-10 w-10 items-center justify-center" key={item.id}>
+      {item.completionDay}
+    </div>
+  ));
+
   const showHabitSquares = habits.map((habit) => (
     <div className="flex h-10 items-center" key={habit.habitId}>
-      <div className="flex">{showSquares(habit)}</div>
+      <div className="flex gap-1">{showSquares(habit)}</div>
     </div>
   ));
 
   return (
     <div className="flex w-1/3 gap-5 rounded-lg bg-gradient-to-r from-blue-400 to-purple-300 p-3 font-semibold text-white">
       <div className="flex">
-        <div className="flex flex-col gap-5">{showHabits}</div>
+        <div className="flex flex-col gap-5">
+          <div className="flex h-10">{/* Blank area */}</div>
+          {showHabits}
+        </div>
       </div>
-      <div className="flex flex-col gap-5">{showHabitSquares}</div>
+      <div className="flex overflow-auto">
+        <div className="flex flex-col gap-5">
+          <div className="flex gap-1">{showHabitDates}</div>
+          <div className="flex">{showHabitSquares}</div>
+        </div>
+      </div>
     </div>
   );
 };
