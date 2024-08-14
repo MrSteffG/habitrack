@@ -6,11 +6,15 @@ const HabitsTest = () => {
   const [habits, setHabits] = useState([
     {
       habitId: 1,
-      habit: "Excercise",
+      habit: "Test1",
     },
     {
       habitId: 2,
-      habit: "Excercise Harder",
+      habit: "test2",
+    },
+    {
+      habitId: 3,
+      habit: "test3",
     },
   ]);
 
@@ -87,6 +91,16 @@ const HabitsTest = () => {
     },
   ]);
 
+  const toggleCompleted = ({ idToUpdate, newData }) => {
+    setCompleted(
+      completed.map(({ id, completionDay, completionDate, habitId, done }) =>
+        id === idToUpdate
+          ? { id, done: newData, completionDate, completionDay, habitId }
+          : { id, done, completionDate, completionDay, habitId },
+      ),
+    );
+  };
+
   const showSquares = (habit) =>
     completed.map((item) => {
       if (habit.habitId === item.habitId) {
@@ -122,14 +136,27 @@ const HabitsTest = () => {
     </div>
   ));
 
-  const showHabitDates = completed.map((item) => (
-    <div className="flex h-10 w-10 items-center justify-center" key={item.id}>
-      {item.completionDay}
-    </div>
-  ));
+  const showHabitDates = completed.map((item) => {
+    const dateMap = new Map();
+    for (let i = 0; i < completed.length; i++) {
+      if (dateMap.has(item.completionDate)) {
+        return;
+      } else {
+        dateMap.set(item.completionDate, i);
+        return (
+          <div
+            className="flex h-10 w-10 items-center justify-center"
+            key={item.id}
+          >
+            {item.completionDate}
+          </div>
+        );
+      }
+    }
+  });
 
   const showHabitSquares = habits.map((habit) => (
-    <div className="flex h-10 items-center" key={habit.habitId}>
+    <div className="flex items-start justify-start gap-5" key={habit.habitId}>
       <div className="flex gap-1">{showSquares(habit)}</div>
     </div>
   ));
@@ -145,7 +172,7 @@ const HabitsTest = () => {
       <div className="flex overflow-auto">
         <div className="flex flex-col gap-5">
           <div className="flex gap-1">{showHabitDates}</div>
-          <div className="flex">{showHabitSquares}</div>
+          <div className="h-full flex-col space-y-5">{showHabitSquares}</div>
         </div>
       </div>
     </div>
