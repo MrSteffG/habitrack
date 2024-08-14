@@ -149,7 +149,7 @@ const HabitsTest = () => {
   const showHabitDates = singleHabitDates().map((date) => {
     return (
       <div className="flex h-10 w-10 items-center justify-center" key={date}>
-        {date}
+        <div>{date}</div>
       </div>
     );
   });
@@ -160,12 +160,29 @@ const HabitsTest = () => {
     </div>
   ));
 
+  const AddHabit = () => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Enter") {
+        setHabits([...habits, { id: 69, habit: e.target.value }]);
+      }
+    };
+
+    return (
+      <input
+        type="text"
+        className="flex h-10 bg-slate-50 bg-opacity-20"
+        onKeyDown={handleKeyDown}
+      />
+    );
+  };
+
   return (
-    <div className="flex w-1/3 gap-5 rounded-lg bg-gradient-to-r from-blue-400 to-purple-300 p-3 font-semibold text-white">
+    <div className="flex w-2/3 gap-5 rounded-lg bg-gradient-to-r from-blue-400 to-purple-300 p-3 font-semibold text-white">
       <div className="flex">
         <div className="flex flex-col gap-5">
           <div className="flex h-10">{/* Blank area */}</div>
           {showHabits}
+          <AddHabit />
         </div>
       </div>
       <div className="flex overflow-auto">
