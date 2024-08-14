@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import dateArr from "./helperFunctions";
 
 const HabitsTest = () => {
   const [habits, setHabits] = useState([
@@ -90,6 +91,12 @@ const HabitsTest = () => {
       done: true,
     },
   ]);
+
+  const [newCompletedArr, setNewCompletedArr] = useState([]);
+
+  const buildHabitArr = () => {
+    console.log(dateArr("swim", 23));
+  };
 
   const toggleCompleted = ({ idToUpdate, newData }) => {
     setCompleted(
@@ -183,6 +190,7 @@ const HabitsTest = () => {
           <div className="flex h-10">{/* Blank area */}</div>
           {showHabits}
           <AddHabit />
+          <button onClick={buildHabitArr}>Build Habbit Arr</button>
         </div>
       </div>
       <div className="flex overflow-auto">
