@@ -136,23 +136,22 @@ const HabitsTest = () => {
     </div>
   ));
 
-  const showHabitDates = completed.map((item) => {
-    const dateMap = new Map();
+  const singleHabitDates = () => {
+    const dateSet = new Set();
     for (let i = 0; i < completed.length; i++) {
-      if (dateMap.has(item.completionDate)) {
-        return;
-      } else {
-        dateMap.set(item.completionDate, i);
-        return (
-          <div
-            className="flex h-10 w-10 items-center justify-center"
-            key={item.id}
-          >
-            {item.completionDate}
-          </div>
-        );
+      if (dateSet.has(completed[i].completionDate)) {
+        return Array.from(dateSet);
       }
+      dateSet.add(completed[i].completionDate);
     }
+  };
+
+  const showHabitDates = singleHabitDates().map((date) => {
+    return (
+      <div className="flex h-10 w-10 items-center justify-center" key={date}>
+        {date}
+      </div>
+    );
   });
 
   const showHabitSquares = habits.map((habit) => (
