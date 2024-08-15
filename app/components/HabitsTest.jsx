@@ -94,8 +94,8 @@ const HabitsTest = () => {
 
   const [newCompletedArr, setNewCompletedArr] = useState([]);
 
-  const buildHabitArr = () => {
-    console.log(dateArr("swim", 23));
+  const buildHabitArr = (id, habit) => {
+    console.log(dateArr(habit, id));
   };
 
   const toggleCompleted = ({ idToUpdate, newData }) => {
@@ -171,6 +171,7 @@ const HabitsTest = () => {
     const handleKeyDown = (e) => {
       if (e.key === "Enter") {
         setHabits([...habits, { id: 69, habit: e.target.value }]);
+        buildHabitArr(e.target.value, 420);
       }
     };
 
