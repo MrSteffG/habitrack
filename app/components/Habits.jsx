@@ -1,16 +1,21 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import dateArr from "./helperFunctions";
 
 const Habits = () => {
   const [habits, setHabits] = useState([
     {
       habitId: 1,
-      habit: "Excercise",
+      habit: "Test1",
     },
     {
       habitId: 2,
-      habit: "Excercise Harder",
+      habit: "test2",
+    },
+    {
+      habitId: 3,
+      habit: "test3",
     },
   ]);
 
@@ -87,89 +92,114 @@ const Habits = () => {
     },
   ]);
 
+  const [newCompletedArr, setNewCompletedArr] = useState([]);
+
+  const buildHabitArr = (id, habit) => {
+    console.log(dateArr(habit, id));
+  };
+
   const toggleCompleted = ({ idToUpdate, newData }) => {
     setCompleted(
-      completed.map(({ id, done, completionDate, completionDay }) =>
+      completed.map(({ id, completionDay, completionDate, habitId, done }) =>
         id === idToUpdate
-          ? { id, done: newData, completionDate, completionDay }
-          : { id, done, completionDate, completionDay },
+          ? { id, done: newData, completionDate, completionDay, habitId }
+          : { id, done, completionDate, completionDay, habitId },
       ),
     );
   };
 
+  const showSquares = (habit) =>
+    completed.map((item) => {
+      if (habit.habitId === item.habitId) {
+        if (item.done === true) {
+          return (
+            <div
+              onClick={() =>
+                toggleCompleted({ idToUpdate: item.id, newData: !item.done })
+              }
+              className="flex h-10 w-10 items-center justify-center rounded-sm bg-green-200"
+              key={item.id}
+            ></div>
+          );
+        } else if (item.done === false) {
+          return (
+            <div
+              onClick={() =>
+                toggleCompleted({ idToUpdate: item.id, newData: !item.done })
+              }
+              className="flex h-10 w-10 items-center justify-center rounded-sm bg-slate-100 bg-opacity-20"
+              key={item.id}
+            ></div>
+          );
+        }
+      } else {
+        return;
+      }
+    });
+
   const showHabits = habits.map((habit) => (
-    <h3 className="flex h-10 items-center" key={habit.habitId}>
+    <div className="flex h-10 items-center" key={habit.habitId}>
       {habit.habit}
-    </h3>
+    </div>
+  ));
+
+  const singleHabitDates = () => {
+    const dateSet = new Set();
+    for (let i = 0; i < completed.length; i++) {
+      if (dateSet.has(completed[i].completionDate)) {
+        return Array.from(dateSet);
+      }
+      dateSet.add(completed[i].completionDate);
+    }
+  };
+
+  const showHabitDates = singleHabitDates().map((date) => {
+    return (
+      <div className="flex h-10 w-10 items-center justify-center" key={date}>
+        <div>{date}</div>
+      </div>
+    );
+  });
+
+  const showHabitSquares = habits.map((habit) => (
+    <div className="flex items-start justify-start gap-5" key={habit.habitId}>
+      <div className="flex gap-1">{showSquares(habit)}</div>
+    </div>
   ));
 
   const AddHabit = () => {
     const handleKeyDown = (e) => {
       if (e.key === "Enter") {
         setHabits([...habits, { id: 69, habit: e.target.value }]);
+        buildHabitArr(e.target.value, 420);
       }
     };
 
     return (
       <input
         type="text"
-        className="h-10 bg-slate-50 bg-opacity-20"
+        className="flex h-10 bg-slate-50 bg-opacity-20"
         onKeyDown={handleKeyDown}
       />
     );
   };
 
-  const showCompletedHabits = (item) =>
-    habits.map((habit) => {
-      if (habit.habitId === item.habitId) {
-        return (
-          <div
-            key={completed.id}
-            className="flex h-10 w-10 items-center justify-center rounded-sm bg-green-200 text-black"
-          ></div>
-        );
-      } else {
-        return;
-      }
-    });
-
-  const showSquares = completed.map((item) => (
-    <div className="flex flex-col gap-5" key={item.id}>
-      <div className="flex h-10 w-10 flex-col items-center" key={item.id}>
-        <div key={item.id}>{item.completionDay}</div>
-        {item.completionDate}
-      </div>
-      {showCompletedHabits(item)}
-
-      {/* <div className="flex flex-col items-center justify-center">
-        {item.done ? (
-          <div
-            onClick={() =>
-              toggleCompleted({ idToUpdate: item.id, newData: !item.done })
-            }
-            className="flex h-10 w-10 items-center justify-center rounded-sm bg-green-200 text-black"
-          ></div>
-        ) : (
-          <div
-            onClick={() =>
-              toggleCompleted({ idToUpdate: item.id, newData: !item.done })
-            }
-            className="flex h-10 w-10 items-center justify-center rounded-sm bg-slate-100 bg-opacity-20 text-black"
-          ></div>
-        )}
-      </div> */}
-    </div>
-  ));
-
   return (
-    <div className="flex w-1/3 gap-5 rounded-lg bg-gradient-to-r from-blue-400 to-purple-300 p-3 font-semibold text-white">
-      <div className="flex flex-col gap-5">
-        <div className="flex h-10 items-center">Habits</div>
-        {showHabits}
-        <AddHabit />
+    <div className="flex w-2/3 gap-5 rounded-lg bg-gradient-to-r from-blue-400 to-purple-300 p-3 font-semibold text-white">
+      <div className="flex">
+        <div className="flex flex-col gap-5">
+          <div className="flex h-10">{/* Blank area */}</div>
+          {showHabits}
+          <AddHabit />
+          <button onClick={buildHabitArr}>Build Habbit Arr</button>
+        </div>
       </div>
-
-      <div className="flex gap-1 overflow-x-auto">{showSquares}</div>
+      <div className="flex overflow-auto">
+        <div className="flex flex-col gap-5">
+          <div className="flex gap-1">{showHabitDates}</div>
+          <div className="h-full flex-col space-y-5">{showHabitSquares}</div>
+        </div>
+      </div>
     </div>
   );
 };

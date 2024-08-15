@@ -47,9 +47,10 @@ const dateArr = (habit, habitId) => {
     ];
     const day = weekday[date.getDate()];
     dateArr.push({
-      date: date.getDate(),
-      day: day,
-      habit: habit,
+      id: i,
+      completionDate: date.getDate().toString(),
+      completionDay: day,
+      done: false,
       habitId: habitId,
     });
   }
@@ -57,3 +58,53 @@ const dateArr = (habit, habitId) => {
   return dateArr;
 };
 export default dateArr;
+
+export const dateArrTest = () => {
+  for (let i = dayDifference; i > 0; i--) {
+    let date = new Date();
+    date.setDate(date.getDate() - i);
+    console.log(date);
+
+    const weekday = [
+      "Sun",
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat",
+      "Sun",
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat",
+      "Sun",
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat",
+      "Sun",
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat",
+      "Sun",
+      "Mon",
+      "Tue",
+      "Wed",
+    ];
+    const day = weekday[date.getDate()];
+    dateArr.push({
+      completionDate: date.getDate(),
+      done: false,
+    });
+  }
+  console.log(dateArr);
+  return dateArr;
+};

@@ -19,6 +19,14 @@ const HabitsTest = () => {
     },
   ]);
 
+  const [newHabitArr, setNewHabitArr] = useState([
+    {
+      habitId: 1,
+      habit: "Test1",
+      dates: [{ date: 14, done: true }],
+    },
+  ]);
+
   const [completed, setCompleted] = useState([
     {
       id: 0,
@@ -92,10 +100,12 @@ const HabitsTest = () => {
     },
   ]);
 
-  const [newCompletedArr, setNewCompletedArr] = useState([]);
+  const [newCompletedArr, setNewCompletedArr] = useState([{}]);
 
-  const buildHabitArr = (id, habit) => {
-    console.log(dateArr(habit, id));
+  const buildHabitArr = (habitId, id) => {
+    console.log(dateArr(habitId, id));
+    console.log(completed);
+    setNewCompletedArr(dateArr(habitId, id));
   };
 
   const toggleCompleted = ({ idToUpdate, newData }) => {
@@ -170,8 +180,8 @@ const HabitsTest = () => {
   const AddHabit = () => {
     const handleKeyDown = (e) => {
       if (e.key === "Enter") {
-        setHabits([...habits, { id: 69, habit: e.target.value }]);
-        buildHabitArr(e.target.value, 420);
+        setHabits([...habits, { habitId: 69, habit: e.target.value }]);
+        buildHabitArr(42, 420);
       }
     };
 
@@ -191,7 +201,9 @@ const HabitsTest = () => {
           <div className="flex h-10">{/* Blank area */}</div>
           {showHabits}
           <AddHabit />
-          <button onClick={buildHabitArr}>Build Habbit Arr</button>
+          <button onClick={() => buildHabitArr(31, 56)}>
+            Build Habbit Arr
+          </button>
         </div>
       </div>
       <div className="flex overflow-auto">
