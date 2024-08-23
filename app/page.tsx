@@ -4,15 +4,13 @@ import Habits from "./components/Habits";
 import Test from "./components/Test";
 import HabitsTest from "./components/HabitsTest";
 import TestTwo from "./components/TestTwo";
+import NewHabits from "./components/NewHabits";
 
 export default function Home() {
   return (
-    <div className="flex h-full w-full flex-col items-center gap-10">
-      <Navbar />
-      <Functionality />
-      <TestTwo />
+    <div className="mt-20 flex h-full w-full flex-col items-center justify-center gap-10">
       <HabitsTest />
-      <Habits />
+      {/* <Habits /> */}
       {/* <Test /> */}
     </div>
   );

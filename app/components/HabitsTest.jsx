@@ -108,6 +108,7 @@ const HabitsTest = () => {
     setNewCompletedArr(dateArr(habitId, id));
   };
 
+  //toggles done in completed array item to the opposite boolean value
   const toggleCompleted = ({ idToUpdate, newData }) => {
     setCompleted(
       completed.map(({ id, completionDay, completionDate, habitId, done }) =>
@@ -118,64 +119,66 @@ const HabitsTest = () => {
     );
   };
 
-  const showSquares = (habit) =>
-    completed.map((item) => {
-      if (habit.habitId === item.habitId) {
-        if (item.done === true) {
-          return (
-            <div
-              onClick={() =>
-                toggleCompleted({ idToUpdate: item.id, newData: !item.done })
-              }
-              className="flex h-10 w-10 items-center justify-center rounded-sm bg-green-200"
-              key={item.id}
-            ></div>
-          );
-        } else if (item.done === false) {
-          return (
-            <div
-              onClick={() =>
-                toggleCompleted({ idToUpdate: item.id, newData: !item.done })
-              }
-              className="flex h-10 w-10 items-center justify-center rounded-sm bg-slate-100 bg-opacity-20"
-              key={item.id}
-            ></div>
-          );
-        }
-      } else {
-        return;
-      }
-    });
-
+  //Shows the habits in Habits Array
   const showHabits = habits.map((habit) => (
     <div className="flex h-10 items-center" key={habit.habitId}>
       {habit.habit}
     </div>
   ));
 
-  const singleHabitDates = () => {
-    const dateSet = new Set();
-    for (let i = 0; i < completed.length; i++) {
-      if (dateSet.has(completed[i].completionDate)) {
-        return Array.from(dateSet);
+  //Displays dates and squares section
+  const DatesAndSquares = () => {
+    const singleHabitDates = () => {
+      const dateSet = new Set();
+      for (let i = 0; i < completed.length; i++) {
+        if (dateSet.has(completed[i].completionDate)) {
+          return Array.from(dateSet);
+        }
+        dateSet.add(completed[i].completionDate);
       }
-      dateSet.add(completed[i].completionDate);
-    }
-  };
+    };
 
-  const showHabitDates = singleHabitDates().map((date) => {
+    //Display each individual date in completedArr
+    const showHabitDates = singleHabitDates().map((date) => {
+      return (
+        <div className="flex h-10 w-10 items-center justify-center" key={date}>
+          <div>{date}</div>
+        </div>
+      );
+    });
+
+    //
+    const showSquares = (habit) =>
+      completed.map((item) => {
+        if (habit.habitId === item.habitId) {
+          return (
+            <div
+              onClick={() =>
+                toggleCompleted({ idToUpdate: item.id, newData: !item.done })
+              }
+              className={`flex h-10 w-10 items-center justify-center rounded-sm ${item.done ? "bg-green-200" : "bg-slate-100 bg-opacity-20"}`}
+              key={item.id}
+            ></div>
+          );
+        } else {
+          return;
+        }
+      });
+
+    //For each item in the habits array, display the squares.
+    const showHabitSquares = habits.map((habit) => (
+      <div className="flex items-start justify-start gap-5" key={habit.habitId}>
+        <div className="flex gap-1">{showSquares(habit)}</div>
+      </div>
+    ));
+
     return (
-      <div className="flex h-10 w-10 items-center justify-center" key={date}>
-        <div>{date}</div>
+      <div className="flex flex-col gap-5">
+        <div className="flex gap-1">{showHabitDates}</div>
+        <div className="h-full flex-col space-y-5">{showHabitSquares}</div>
       </div>
     );
-  });
-
-  const showHabitSquares = habits.map((habit) => (
-    <div className="flex items-start justify-start gap-5" key={habit.habitId}>
-      <div className="flex gap-1">{showSquares(habit)}</div>
-    </div>
-  ));
+  };
 
   const AddHabit = () => {
     const handleKeyDown = (e) => {
@@ -206,12 +209,8 @@ const HabitsTest = () => {
           </button>
         </div>
       </div>
-      <div className="flex overflow-auto">
-        <div className="flex flex-col gap-5">
-          <div className="flex gap-1">{showHabitDates}</div>
-          <div className="h-full flex-col space-y-5">{showHabitSquares}</div>
-        </div>
-      </div>
+
+      <DatesAndSquares />
     </div>
   );
 };

@@ -3,6 +3,7 @@ import "./globals.css";
 import { Montserrat } from "next/font/google";
 
 import { ClerkProvider } from "@clerk/nextjs";
+import Navbar from "./components/Navbar";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -20,7 +21,12 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={montserrat.className}>{children}</body>
+        <body className={montserrat.className}>
+          <div className="flex h-full w-full flex-col items-center gap-10">
+            <Navbar />
+            {children}
+          </div>
+        </body>
       </html>
     </ClerkProvider>
   );
