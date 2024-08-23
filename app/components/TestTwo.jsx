@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import newDateArr from "./helperFunctions";
+import newDateArr from "./dateArr";
 
 const TestTwo = () => {
   const [newHabitArr, setNewHabitArr] = useState([

@@ -1,5 +1,5 @@
 import Functionality from "./components/Functionality";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/UI/Navbar";
 import Habits from "./components/Habits";
 import Test from "./components/Test";
 import HabitsTest from "./components/HabitsTest";

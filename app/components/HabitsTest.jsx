@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import dateArr from "./helperFunctions";
+import dateArr from "./dateArr";
+import { completedArr } from "./data";
 
 const HabitsTest = () => {
   const [habits, setHabits] = useState([
@@ -19,88 +20,7 @@ const HabitsTest = () => {
     },
   ]);
 
-  const [newHabitArr, setNewHabitArr] = useState([
-    {
-      habitId: 1,
-      habit: "Test1",
-      dates: [{ date: 14, done: true }],
-    },
-  ]);
-
-  const [completed, setCompleted] = useState([
-    {
-      id: 0,
-      completionDay: "Mon",
-      completionDate: "5",
-      habitId: 1,
-      done: false,
-    },
-    {
-      id: 1,
-      completionDay: "Tue",
-      completionDate: "6",
-      habitId: 1,
-      done: true,
-    },
-    {
-      id: 2,
-      completionDay: "Wed",
-      completionDate: "7",
-      habitId: 1,
-      done: false,
-    },
-    {
-      id: 3,
-      completionDay: "Thu",
-      completionDate: "8",
-      habitId: 1,
-      done: true,
-    },
-    {
-      id: 4,
-      completionDay: "Fri",
-      completionDate: "9",
-      habitId: 1,
-      done: true,
-    },
-    {
-      id: 5,
-      completionDay: "Sat",
-      completionDate: "10",
-      habitId: 1,
-      done: false,
-    },
-    {
-      id: 6,
-      completionDay: "Sun",
-      completionDate: "11",
-      habitId: 1,
-      done: true,
-    },
-    {
-      id: 7,
-      completionDay: "Mon",
-      completionDate: "12",
-      habitId: 1,
-      done: false,
-    },
-    {
-      id: 8,
-      completionDay: "Tue",
-      completionDate: "13",
-      habitId: 1,
-      done: true,
-    },
-    {
-      id: 9,
-      completionDay: "Tue",
-      completionDate: "13",
-      habitId: 2,
-      done: true,
-    },
-  ]);
-
-  const [newCompletedArr, setNewCompletedArr] = useState([{}]);
+  const [completed, setCompleted] = useState(completedArr);
 
   const buildHabitArr = (habitId, id) => {
     console.log(dateArr(habitId, id));
@@ -108,7 +28,7 @@ const HabitsTest = () => {
     setNewCompletedArr(dateArr(habitId, id));
   };
 
-  //toggles done in completed array item to the opposite boolean value
+  //toggles done value in completed array item to the opposite boolean
   const toggleCompleted = ({ idToUpdate, newData }) => {
     setCompleted(
       completed.map(({ id, completionDay, completionDate, habitId, done }) =>

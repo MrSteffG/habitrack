@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import dateArr from "./helperFunctions";
+import dateArr from "./dateArr";
 
 const Habits = () => {
   const [habits, setHabits] = useState([
