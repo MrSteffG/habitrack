@@ -1,107 +1,53 @@
 "use client";
-import React, { useState } from "react";
+
+import React, { useEffect, useState } from "react";
+import dateArr, { datesSinceAugust } from "./dateArr";
+import completedArr from "./data";
 
 const Test = () => {
-  const [habits, sethabits] = useState([
-    {
-      habitId: 0,
-      habit: "habit1",
-    },
+  const dates = datesSinceAugust();
+
+  const [habits, setHabits] = useState([
     {
       habitId: 1,
-      habit: "habit2",
+      habit: "Test1",
     },
     {
       habitId: 2,
-      habit: "habit3",
+      habit: "test2",
+    },
+    {
+      habitId: 3,
+      habit: "test3",
     },
   ]);
 
-  const [completedHabits, setCompletedHabits] = useState([
-    { id: 0, habitId: 0, completed: false },
-    { id: 1, habitId: 0, completed: true },
-    { id: 2, habitId: 1, completed: false },
-    { id: 3, habitId: 2, completed: true },
-  ]);
-
-  const [items, setItems] = useState([
-    { id: 0, data: "a", completed: false },
-    { id: 1, data: "b", completed: false },
-    { id: 2, data: "d", completed: false },
-  ]);
-
-  const updateCompleted = ({ idToUpdate, newData }) => {
-    setItems(
-      items.map(({ id, completed }) =>
-        id === idToUpdate ? { id, completed: newData } : { id, completed },
-      ),
-    );
-  };
-
-  const showCompletedHabits = (habitId) =>
-    completedHabits.map((completed) => {
-      if (habitId === completed.habitId) {
-        if (completed.completed === true) {
-          return (
-            <div
-              className="flex h-10 w-10 bg-green-100"
-              key={completed.id}
-            ></div>
-          );
-        } else if (completed.completed === false) {
-          return (
-            <div className="flex h-10 w-10 bg-red-100" key={completed.id}></div>
-          );
-        }
-      } else {
-        return;
-      }
-    });
-
-  const showFullHabits = habits.map((habit) => (
-    <div key={habit.id} className="flex items-center justify-center gap-5">
+  //Shows the habits in Habits Array
+  const showHabits = habits.map((habit) => (
+    <div className="flex h-10 items-center" key={habit.habitId}>
       {habit.habit}
-      {showCompletedHabits(habit.habitId)}
     </div>
   ));
 
+  const showDates = dates.map((date) => (
+    <div key={date} className="flex h-10 items-center">
+      {date.substring(8, 10)}
+    </div>
+  ));
+
+  //Todo
+  //* Sort out spacing issue
+  //* Print out the squares, map over the habits, for each habit map through the dates & display a square.
+  //* To check completed map through the completed arr, if the dates match and then the habit id, and done is set to true, return a coloured square.
   return (
-    <div className="flex flex-col items-center justify-center gap-10">
-      <div className="mt-10 flex items-center gap-5">
-        {items.map((item) => (
-          <div
-            key={item.id}
-            className="flex h-10 w-10"
-            onClick={() =>
-              updateCompleted({ idToUpdate: item.id, newData: !item.completed })
-            }
-          >
-            {item.completed ? (
-              <div
-                className="flex h-10 w-10 bg-green-200"
-                onClick={() =>
-                  updateCompleted({
-                    idToUpdate: item.id,
-                    newData: !item.completed,
-                  })
-                }
-              ></div>
-            ) : (
-              <div
-                className="flex h-10 w-10 bg-red-200"
-                onClick={() =>
-                  updateCompleted({
-                    idToUpdate: item.id,
-                    newData: !item.completed,
-                  })
-                }
-              ></div>
-            )}
-          </div>
-        ))}
+    <div className="flex w-2/3 gap-5 rounded-lg bg-gradient-to-r from-blue-400 to-purple-300 p-3 font-semibold text-white">
+      <div className="flex">
+        <div className="flex flex-col gap-5">
+          <div className="flex h-10">spacer</div>
+          {showHabits}
+        </div>
       </div>
-      <div>New function goes here</div>
-      {showFullHabits}
+      <div className="flex gap-5 overflow-auto">{showDates}</div>
     </div>
   );
 };

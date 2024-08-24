@@ -1,4 +1,4 @@
-export const completedArr = [
+const completedArr = [
   {
     id: 0,
     completionDay: "Mon",
@@ -70,17 +70,57 @@ export const completedArr = [
     done: true,
   },
   {
-    id: 9,
+    id: 10,
     completionDay: "Tue",
     completionDate: "14",
     habitId: 2,
     done: true,
   },
   {
-    id: 10,
+    id: 11,
     completionDay: "Tue",
     completionDate: "13",
     habitId: 3,
+    done: true,
+  },
+];
+export default completedArr;
+
+export const newCompletedArr = [
+  {
+    id: 0,
+    completionDay: new Date(2024, 7, 1),
+    habitId: 1,
+    done: true,
+  },
+  {
+    id: 1,
+    completionDay: new Date(2024, 7, 1),
+    habitId: 1,
+    done: true,
+  },
+  {
+    id: 2,
+    completionDay: new Date(2024, 7, 1),
+    habitId: 1,
+    done: true,
+  },
+  {
+    id: 3,
+    completionDay: new Date(2024, 7, 1),
+    habitId: 1,
+    done: true,
+  },
+  {
+    id: 4,
+    completionDay: new Date(2024, 7, 1),
+    habitId: 1,
+    done: true,
+  },
+  {
+    id: 5,
+    completionDay: new Date(2024, 7, 1),
+    habitId: 1,
     done: true,
   },
 ];

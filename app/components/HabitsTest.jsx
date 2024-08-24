@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import dateArr from "./dateArr";
-import { completedArr } from "./data";
+import dateArr, { datesSinceAugust } from "./dateArr";
+import completedArr from "./data";
 
 const HabitsTest = () => {
   const [habits, setHabits] = useState([
