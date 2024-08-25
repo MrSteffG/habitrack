@@ -1,10 +1,21 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import datesSinceAugust from "./dateArr";
 import { completedArr } from "./data";
+import supabaseClient from "../../config/supabaseClient";
+import {
+  SignedIn,
+  SignedOut,
+  useAuth,
+  useUser,
+  UserButton,
+  useSession,
+} from "@clerk/nextjs";
 
-const Habits = () => {
+const HabitsSupabase = () => {
+  const { getToken } = useAuth();
+
   //Use State variables
   const dates = datesSinceAugust();
   const [completed, setCompleted] = useState(completedArr);
@@ -22,6 +33,28 @@ const Habits = () => {
       habit: "test3",
     },
   ]);
+
+  useEffect(() => {
+    const selectData = async () => {
+      try {
+        const supabaseAccessToken = await getToken({
+          template: "supabase",
+        });
+
+        const supabase = await supabaseClient(supabaseAccessToken);
+        const { data: habits, error } = await supabase
+          .from("habits")
+          .select("*");
+        console.log(habits);
+        setHabits(habits);
+      } catch (error) {
+        console.log("Catch statement, something went wrong" + error);
+      } finally {
+        console.log("ho finito");
+      }
+    };
+    selectData();
+  }, []);
 
   //Shows the habits in Habits Array
   const showHabits = habits.map((habit) => (
@@ -153,4 +186,4 @@ const Habits = () => {
   );
 };
 
-export default Habits;
+export default HabitsSupabase;

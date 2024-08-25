@@ -23,7 +23,7 @@ const Functionality = () => {
       });
 
       const supabase = await supabaseClient(supabaseAccessToken);
-      const { data: items, error } = await supabase.from("items").select("*");
+      const { data: items, error } = await supabase.from("habits").select("*");
       console.log(items);
       setItems(items);
     } catch (error) {
