@@ -35,6 +35,17 @@ const Test = () => {
     </div>
   ));
 
+  const showSquares = habits.map((habit) => (
+    <div className="flex h-10 items-center gap-5" key={habit.habitId}>
+      {dates.map((date) => (
+        <div
+          key={date}
+          className="flex h-10 w-10 items-center justify-center rounded-sm bg-slate-100 bg-opacity-20"
+        ></div>
+      ))}
+    </div>
+  ));
+
   //Todo
   //* Sort out spacing issue
   //* Print out the squares, map over the habits, for each habit map through the dates & display a square.
@@ -47,7 +58,10 @@ const Test = () => {
           {showHabits}
         </div>
       </div>
-      <div className="flex gap-5 overflow-auto">{showDates}</div>
+      <div className="flex flex-col gap-5 overflow-auto">
+        <div className="flex gap-5">{showDates}</div>
+        {showSquares}
+      </div>
     </div>
   );
 };
