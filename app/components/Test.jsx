@@ -105,18 +105,37 @@ const Test = () => {
     ]);
   };
 
+  const AddHabit = () => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Enter") {
+        setHabits([...habits, { id: Date.now(), habit: e.target.value }]);
+      }
+    };
+
+    return (
+      <input
+        type="text"
+        className="flex h-10 bg-slate-50 bg-opacity-20 p-2 text-sm placeholder:text-white placeholder:opacity-50"
+        onKeyDown={handleKeyDown}
+        placeholder="Add habits here"
+      />
+    );
+  };
+
   //Todo
-  // Add toggle square functionality
+  //Add habit function
+  //Delete habit
 
   return (
-    <div className="flex w-2/3 gap-5 rounded-lg bg-gradient-to-r from-blue-400 to-purple-300 p-3 font-semibold text-white">
+    <div className="flex w-1/3 gap-5 rounded-lg bg-gradient-to-r from-blue-400 to-purple-300 p-3 font-semibold text-white">
       <div className="flex">
         <div className="flex flex-col gap-5">
           <div className="flex h-10 items-center">{/* Spacer */}</div>
           {showHabits}
+          <AddHabit />
         </div>
       </div>
-      <div className="flex overflow-auto">
+      <div className="flex flex-row-reverse overflow-auto">
         <div className="flex flex-col gap-5">
           <div className="flex w-full gap-1">{showDates}</div>
           {showSquares}
