@@ -2,22 +2,22 @@
 
 import React, { useEffect, useState } from "react";
 import dateArr, { datesSinceAugust } from "./dateArr";
-import completedArr from "./data";
+import completedArr, { newCompletedArr } from "./data";
 
 const Test = () => {
   const dates = datesSinceAugust();
 
   const [habits, setHabits] = useState([
     {
-      habitId: 1,
+      habitId: 0,
       habit: "Test1",
     },
     {
-      habitId: 2,
+      habitId: 1,
       habit: "test2",
     },
     {
-      habitId: 3,
+      habitId: 2,
       habit: "test3",
     },
   ]);
@@ -29,14 +29,18 @@ const Test = () => {
     </div>
   ));
 
+  //Shows the dates at the top from august to now
   const showDates = dates.map((date) => (
-    <div key={date} className="flex h-10 items-center">
+    <div
+      key={date}
+      className="flex h-10 w-10 items-center justify-center rounded-sm bg-slate-100 bg-opacity-20"
+    >
       {date.substring(8, 10)}
     </div>
   ));
 
   const showSquares = habits.map((habit) => (
-    <div className="flex h-10 items-center gap-5" key={habit.habitId}>
+    <div className="flex h-10 w-full items-center gap-1" key={habit.habitId}>
       {dates.map((date) => (
         <div
           key={date}
@@ -46,21 +50,46 @@ const Test = () => {
     </div>
   ));
 
+  console.log(newCompletedArr);
+
+  const showDoneSquares = habits.map((habit) => (
+    <div className="flex h-10 w-full items-center gap-1" key={habit.habitId}>
+      {dates.map((date) => {
+        for (let i = 0; i < newCompletedArr.length; i++) {
+          if (
+            (newCompletedArr[i].completionDay === date) &
+            (newCompletedArr[i].habitId === habit.habitId) &
+            newCompletedArr[i].done
+          ) {
+            return (
+              <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-green-100 bg-opacity-80"></div>
+            );
+          }
+        }
+        return (
+          <div
+            key={date}
+            className="flex h-10 w-10 items-center justify-center rounded-sm bg-slate-100 bg-opacity-20"
+          ></div>
+        );
+      })}
+    </div>
+  ));
   //Todo
-  //* Sort out spacing issue
-  //* Print out the squares, map over the habits, for each habit map through the dates & display a square.
+  //Get dateArr datatype and completed date datatype the same
   //* To check completed map through the completed arr, if the dates match and then the habit id, and done is set to true, return a coloured square.
   return (
-    <div className="flex w-2/3 gap-5 rounded-lg bg-gradient-to-r from-blue-400 to-purple-300 p-3 font-semibold text-white">
+    <div className="flex w-2/3 gap-5 overflow-auto rounded-lg bg-gradient-to-r from-blue-400 to-purple-300 p-3 font-semibold text-white">
       <div className="flex">
         <div className="flex flex-col gap-5">
-          <div className="flex h-10">spacer</div>
+          <div className="flex h-10 items-center">spacer</div>
           {showHabits}
         </div>
       </div>
-      <div className="flex flex-col gap-5 overflow-auto">
-        <div className="flex gap-5">{showDates}</div>
-        {showSquares}
+      <div className="flex flex-col gap-5">
+        <div className="flex w-full gap-1">{showDates}</div>
+        {/* {showSquares} */}
+        {showDoneSquares}
       </div>
     </div>
   );
