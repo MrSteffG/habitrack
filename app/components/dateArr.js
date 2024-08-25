@@ -64,9 +64,9 @@ export const datesSinceAugust = () => {
   const startOfAug = new Date(2024, 7, 0);
   const difference = today - startOfAug;
   const diffDays = Math.floor(difference / (1000 * 60 * 60 * 24));
-  console.log(
-    `The date is ${today} and the start of the year is ${startOfAug}, the diference is ${diffDays}`,
-  );
+  // console.log(
+  //   `The date is ${today} and the start of the year is ${startOfAug}, the diference is ${diffDays}`,
+  // );
   let dateToPush = startOfAug;
   let dateArr = [];
 
@@ -74,6 +74,6 @@ export const datesSinceAugust = () => {
     dateToPush.setUTCDate(dateToPush.getUTCDate() + 1);
     dateArr.push(dateToPush.toString().substring(0, 15));
   }
-  console.log(dateArr);
+  // console.log(dateArr);
   return dateArr;
 };

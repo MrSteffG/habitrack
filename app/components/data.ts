@@ -95,7 +95,7 @@ export const newCompletedArr = [
   },
   {
     id: 1,
-    completionDay: "Thu Aug 01 2024",
+    completionDay: "Sun Aug 25 2024",
     habitId: 1,
     done: true,
   },
