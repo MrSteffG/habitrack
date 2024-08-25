@@ -112,23 +112,27 @@ const Habits = () => {
   const AddHabit = () => {
     const handleKeyDown = (e) => {
       if (e.key === "Enter") {
-        setHabits([...habits, { id: Date.now(), habit: e.target.value }]);
+        setHabits([...habits, { habitId: Date.now(), habit: e.target.value }]);
+        console.log(completed);
+        console.log(habits);
       }
     };
 
     return (
       <input
         type="text"
-        className="flex h-10 bg-slate-50 bg-opacity-20 p-2 text-sm placeholder:text-white placeholder:opacity-50"
+        className="flex h-10 rounded-md bg-slate-50 bg-opacity-20 p-2 text-sm placeholder:text-white placeholder:opacity-50"
         onKeyDown={handleKeyDown}
         placeholder="Add habits here"
       />
     );
   };
 
-  //Todo
-  //Add habit function
-  //Delete habit
+  // TODO:
+  // Delete habit
+  // Rename habit
+  // Improve responsivity
+  // Connect to supabase
 
   return (
     <div className="flex w-1/3 gap-5 rounded-lg bg-gradient-to-r from-blue-400 to-purple-300 p-3 font-semibold text-white">
