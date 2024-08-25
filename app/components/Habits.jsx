@@ -1,14 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import dateArr, { datesSinceAugust } from "./dateArr";
-import { newCompletedArr } from "./data";
+import React, { useState } from "react";
+import datesSinceAugust from "./dateArr";
+import { completedArr } from "./data";
 
 const Habits = () => {
+  //Use State variables
   const dates = datesSinceAugust();
-
-  const [completed, setCompleted] = useState(newCompletedArr);
-
+  const [completed, setCompleted] = useState(completedArr);
   const [habits, setHabits] = useState([
     {
       habitId: 0,
@@ -42,6 +41,8 @@ const Habits = () => {
     </div>
   ));
 
+  //For each habit, maps through the dates since august to display the squares and for each date that is the same as a completed item,
+  //checks the done value to determine square properties.
   const showSquares = habits.map((habit) => (
     <div className="flex h-10 w-full items-center gap-1" key={habit.habitId}>
       {dates.map((date) => {
@@ -60,6 +61,7 @@ const Habits = () => {
                     newData: !completed[i].done,
                   })
                 }
+                key={date}
               ></div>
             );
           }
@@ -82,7 +84,7 @@ const Habits = () => {
     </div>
   ));
 
-  //toggles done value in completed array item to the opposite boolean
+  //toggles done values in completed array item to the opposite boolean
   const toggleCompletedOff = ({ idToUpdate, newData }) => {
     setCompleted(
       completed.map(({ id, completionDay, habitId, done }) =>
@@ -93,6 +95,7 @@ const Habits = () => {
     );
   };
 
+  // Adds a new completed array object with new values & done as true
   const toggleCompletedOn = ({ idToUpdate, newData, day, habit }) => {
     setCompleted([
       ...completed,
@@ -105,6 +108,7 @@ const Habits = () => {
     ]);
   };
 
+  //Adds new habit item to habits array
   const AddHabit = () => {
     const handleKeyDown = (e) => {
       if (e.key === "Enter") {
