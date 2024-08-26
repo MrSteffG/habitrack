@@ -12,6 +12,7 @@ import {
   UserButton,
   useSession,
 } from "@clerk/nextjs";
+import { MdDeleteOutline } from "react-icons/md";
 
 const HabitsSupabase = () => {
   const { getToken } = useAuth();
@@ -78,8 +79,14 @@ const HabitsSupabase = () => {
 
   //Shows the habits in Habits Array
   const showHabits = habits.map((habit) => (
-    <div className="flex h-10 items-center" key={habit.habitId}>
+    <div
+      id="habit"
+      className="group flex h-10 items-center justify-between"
+      key={habit.habitId}
+    >
       {habit.habit}
+
+      <MdDeleteOutline className="hidden text-lg opacity-80 transition-all duration-200 hover:scale-125 hover:cursor-pointer hover:opacity-100 group-hover:block" />
     </div>
   ));
 
