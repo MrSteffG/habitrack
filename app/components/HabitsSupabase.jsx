@@ -35,7 +35,7 @@ const HabitsSupabase = () => {
   ]);
 
   useEffect(() => {
-    const selectData = async () => {
+    const selectHabits = async () => {
       try {
         const supabaseAccessToken = await getToken({
           template: "supabase",
@@ -53,7 +53,29 @@ const HabitsSupabase = () => {
         console.log("ho finito");
       }
     };
-    selectData();
+    selectHabits();
+  }, []);
+
+  useEffect(() => {
+    const selectCompleted = async () => {
+      try {
+        const supabaseAccessToken = await getToken({
+          template: "supabase",
+        });
+
+        const supabase = await supabaseClient(supabaseAccessToken);
+        const { data: completed, error } = await supabase
+          .from("completed")
+          .select("*");
+        console.log(completed);
+        setCompleted(completed);
+      } catch (error) {
+        console.log("Catch statement, something went wrong" + error);
+      } finally {
+        console.log("Got completed");
+      }
+    };
+    selectCompleted();
   }, []);
 
   //Shows the habits in Habits Array
@@ -165,7 +187,12 @@ const HabitsSupabase = () => {
   // Delete habit
   // Rename habit
   // Improve responsivity
-  // Connect to supabase
+  // Dark mode
+  // Change date datatype to match supabase's
+  // Add completed item Supabase
+  // Add RLS
+  // Habit Dashboard
+  // Choose habit colour
 
   return (
     <div className="flex w-2/3 gap-5 rounded-lg bg-gradient-to-r from-blue-400 to-purple-300 p-3 font-semibold text-white">
