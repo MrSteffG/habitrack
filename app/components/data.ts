@@ -1,8 +1,8 @@
 export const completedArr = [
   {
-    id: 0,
-    completionDay: "Thu Aug 01 2024",
-    habitId: 0,
+    id: 1,
+    completionDay: "2024-08-09",
+    habitId: 1,
     done: true,
   },
   {

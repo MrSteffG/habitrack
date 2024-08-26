@@ -7,7 +7,7 @@ export default function Home() {
     <div className="mt-20 flex h-full w-full flex-col items-center justify-center gap-10">
       <Functionality />
       <HabitsSupabase />
-      <Habits />
+      {/* <Habits /> */}
     </div>
   );
 }

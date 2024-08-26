@@ -35,28 +35,6 @@ const HabitsSupabase = () => {
   ]);
 
   useEffect(() => {
-    const selectHabits = async () => {
-      try {
-        const supabaseAccessToken = await getToken({
-          template: "supabase",
-        });
-
-        const supabase = await supabaseClient(supabaseAccessToken);
-        const { data: habits, error } = await supabase
-          .from("habits")
-          .select("*");
-        console.log(habits);
-        setHabits(habits);
-      } catch (error) {
-        console.log("Catch statement, something went wrong" + error);
-      } finally {
-        console.log("ho finito");
-      }
-    };
-    selectHabits();
-  }, []);
-
-  useEffect(() => {
     const selectCompleted = async () => {
       try {
         const supabaseAccessToken = await getToken({
@@ -78,6 +56,28 @@ const HabitsSupabase = () => {
     selectCompleted();
   }, []);
 
+  useEffect(() => {
+    const selectHabits = async () => {
+      try {
+        const supabaseAccessToken = await getToken({
+          template: "supabase",
+        });
+
+        const supabase = await supabaseClient(supabaseAccessToken);
+        const { data: habits, error } = await supabase
+          .from("habits")
+          .select("*");
+        console.log(habits);
+        setHabits(habits);
+      } catch (error) {
+        console.log("Catch statement, something went wrong" + error);
+      } finally {
+        console.log("ho finito");
+      }
+    };
+    selectHabits();
+  }, []);
+
   //Shows the habits in Habits Array
   const showHabits = habits.map((habit) => (
     <div className="flex h-10 items-center" key={habit.habitId}>
@@ -88,11 +88,11 @@ const HabitsSupabase = () => {
   //Shows the dates at the top from august to now
   const showDates = dates.map((date) => (
     <div
-      key={date}
+      key={date.dateMap}
       className="flex h-10 w-10 flex-col items-center justify-center text-sm"
     >
-      <div>{date.substring(0, 3)}</div>
-      <div>{date.substring(8, 10)}</div>
+      <div>{date.dateMap.substring(0, 3)}</div>
+      <div>{date.dateMap.substring(5, 7)}</div>
     </div>
   ));
 
@@ -103,7 +103,7 @@ const HabitsSupabase = () => {
       {dates.map((date) => {
         for (let i = 0; i < completed.length; i++) {
           if (
-            (completed[i].completionDay === date) &
+            (completed[i].completionDay === date.dateStr) &
             (completed[i].habitId === habit.habitId) &
             completed[i].done
           ) {
@@ -116,20 +116,20 @@ const HabitsSupabase = () => {
                     newData: !completed[i].done,
                   })
                 }
-                key={date}
+                key={date.dateStr}
               ></div>
             );
           }
         }
         return (
           <div
-            key={date}
+            key={date.dateStr}
             className="flex h-10 w-10 items-center justify-center rounded-sm bg-slate-100 bg-opacity-20"
             onClick={() =>
               toggleCompletedOn({
                 idToUpdate: Date.now(),
                 newData: true,
-                day: date,
+                day: date.dateStr,
                 habit: habit.habitId,
               })
             }
