@@ -46,12 +46,12 @@ const HabitsSupabase = () => {
       const { data: completed, error } = await supabase
         .from("completed")
         .select("*");
-      console.log(completed);
+      // console.log(completed);
       setCompleted(completed);
     } catch (error) {
       console.log("Catch statement, something went wrong" + error);
     } finally {
-      console.log("Got completed");
+      // console.log("Got completed");
     }
   };
 
@@ -63,12 +63,12 @@ const HabitsSupabase = () => {
 
       const supabase = await supabaseClient(supabaseAccessToken);
       const { data: habits, error } = await supabase.from("habits").select("*");
-      console.log(habits);
+      // console.log(habits);
       setHabits(habits);
     } catch (error) {
       console.log("Catch statement, something went wrong" + error);
     } finally {
-      console.log("ho finito");
+      // console.log("ho finito");
     }
   };
 
@@ -86,9 +86,42 @@ const HabitsSupabase = () => {
     >
       {habit.habit}
 
-      <MdDeleteOutline className="hidden text-lg opacity-80 transition-all duration-200 hover:scale-125 hover:cursor-pointer hover:opacity-100 group-hover:block" />
+      <MdDeleteOutline
+        className="hidden text-lg opacity-80 transition-all duration-200 hover:scale-125 hover:cursor-pointer hover:opacity-100 group-hover:block"
+        onClick={() => deleteHabit(habit.habitId)}
+      />
     </div>
   ));
+
+  const newHabit = async (habit) => {
+    const supabaseAccessToken = await session.getToken({
+      template: "supabase",
+    });
+    const supabase = await supabaseClient(supabaseAccessToken);
+    const { data, error } = await supabase
+      .from("habits")
+      .insert({ habitId: Date.now(), habit: habit })
+      .select();
+    if (data) {
+      setHabits([...habits, data[0]]);
+    }
+  };
+
+  const deleteHabit = async (habitId) => {
+    const supabaseAccessToken = await session.getToken({
+      template: "supabase",
+    });
+    const supabase = await supabaseClient(supabaseAccessToken);
+    const { data, error } = await supabase
+      .from("habits")
+      .delete()
+      .eq("habitId", habitId);
+    if (error) {
+      console.log(error);
+    } else {
+      setHabits(habits.filter((habit) => habit.habitId !== habitId));
+    }
+  };
 
   //Shows the dates at the top from august to now
   const showDates = dates.map((date) => (
@@ -199,20 +232,6 @@ const HabitsSupabase = () => {
         placeholder="Add habits here"
       />
     );
-  };
-
-  const newHabit = async (habit) => {
-    const supabaseAccessToken = await session.getToken({
-      template: "supabase",
-    });
-    const supabase = await supabaseClient(supabaseAccessToken);
-    const { data, error } = await supabase
-      .from("habits")
-      .insert({ habitId: Date.now(), habit: habit })
-      .select();
-    if (data) {
-      setHabits([...habits, data[0]]);
-    }
   };
 
   // TODO:
