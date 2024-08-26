@@ -35,48 +35,45 @@ const HabitsSupabase = () => {
     },
   ]);
 
+  const selectCompleted = async () => {
+    try {
+      const supabaseAccessToken = await getToken({
+        template: "supabase",
+      });
+
+      const supabase = await supabaseClient(supabaseAccessToken);
+      const { data: completed, error } = await supabase
+        .from("completed")
+        .select("*");
+      console.log(completed);
+      setCompleted(completed);
+    } catch (error) {
+      console.log("Catch statement, something went wrong" + error);
+    } finally {
+      console.log("Got completed");
+    }
+  };
+
+  const selectHabits = async () => {
+    try {
+      const supabaseAccessToken = await getToken({
+        template: "supabase",
+      });
+
+      const supabase = await supabaseClient(supabaseAccessToken);
+      const { data: habits, error } = await supabase.from("habits").select("*");
+      console.log(habits);
+      setHabits(habits);
+    } catch (error) {
+      console.log("Catch statement, something went wrong" + error);
+    } finally {
+      console.log("ho finito");
+    }
+  };
+
   useEffect(() => {
-    const selectCompleted = async () => {
-      try {
-        const supabaseAccessToken = await getToken({
-          template: "supabase",
-        });
-
-        const supabase = await supabaseClient(supabaseAccessToken);
-        const { data: completed, error } = await supabase
-          .from("completed")
-          .select("*");
-        console.log(completed);
-        setCompleted(completed);
-      } catch (error) {
-        console.log("Catch statement, something went wrong" + error);
-      } finally {
-        console.log("Got completed");
-      }
-    };
-    selectCompleted();
-  }, []);
-
-  useEffect(() => {
-    const selectHabits = async () => {
-      try {
-        const supabaseAccessToken = await getToken({
-          template: "supabase",
-        });
-
-        const supabase = await supabaseClient(supabaseAccessToken);
-        const { data: habits, error } = await supabase
-          .from("habits")
-          .select("*");
-        console.log(habits);
-        setHabits(habits);
-      } catch (error) {
-        console.log("Catch statement, something went wrong" + error);
-      } finally {
-        console.log("ho finito");
-      }
-    };
     selectHabits();
+    selectCompleted();
   }, []);
 
   //Shows the habits in Habits Array
@@ -152,37 +149,36 @@ const HabitsSupabase = () => {
   };
 
   // Adds a new completed array object with new values & done as true
-  const toggleCompletedOn = ({ idToUpdate, newData, day, habit }) => {
-    setCompleted([
-      ...completed,
-      {
+  // const toggleCompletedOn = ({ idToUpdate, newData, day, habit }) => {
+  //   setCompleted([
+  //     ...completed,
+  //     {
+  //       id: idToUpdate,
+  //       done: newData,
+  //       completionDay: day,
+  //       habitId: habit,
+  //     },
+  //   ]);
+  // };
+
+  const toggleCompletedOn = async ({ idToUpdate, newData, day, habit }) => {
+    const supabaseAccessToken = await session.getToken({
+      template: "supabase",
+    });
+    const supabase = await supabaseClient(supabaseAccessToken);
+    const { data, error } = await supabase
+      .from("completed")
+      .insert({
         id: idToUpdate,
         done: newData,
         completionDay: day,
         habitId: habit,
-      },
-    ]);
+      })
+      .select();
+    if (data) {
+      setCompleted([...completed, data[0]]);
+    }
   };
-
-  //Adds new habit item to habits array
-  // const AddHabit = () => {
-  //   const handleKeyDown = (e) => {
-  //     if (e.key === "Enter") {
-  //       setHabits([...habits, { habitId: Date.now(), habit: e.target.value }]);
-  //       console.log(completed);
-  //       console.log(habits);
-  //     }
-  //   };
-
-  //   return (
-  //     <input
-  //       type="text"
-  //       className="flex h-10 rounded-md bg-slate-50 bg-opacity-20 p-2 text-sm placeholder:text-white placeholder:opacity-50"
-  //       onKeyDown={handleKeyDown}
-  //       placeholder="Add habits here"
-  //     />
-  //   );
-  // };
 
   const AddHabit = () => {
     const handleKeyDown = (e) => {
