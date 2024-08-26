@@ -128,11 +128,7 @@ const Habits = () => {
     );
   };
 
-  // TODO:
-  // Delete habit
-  // Rename habit
-  // Improve responsivity
-  // Connect to supabase
+  // Note, DateArr output has changed
 
   return (
     <div className="flex w-2/3 gap-5 rounded-lg bg-gradient-to-r from-blue-400 to-purple-300 p-3 font-semibold text-white">

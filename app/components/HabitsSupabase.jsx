@@ -17,6 +17,7 @@ const HabitsSupabase = () => {
   const { getToken } = useAuth();
 
   //Use State variables
+  const { session } = useSession();
   const dates = datesSinceAugust();
   const [completed, setCompleted] = useState(completedArr);
   const [habits, setHabits] = useState([
@@ -164,12 +165,29 @@ const HabitsSupabase = () => {
   };
 
   //Adds new habit item to habits array
+  // const AddHabit = () => {
+  //   const handleKeyDown = (e) => {
+  //     if (e.key === "Enter") {
+  //       setHabits([...habits, { habitId: Date.now(), habit: e.target.value }]);
+  //       console.log(completed);
+  //       console.log(habits);
+  //     }
+  //   };
+
+  //   return (
+  //     <input
+  //       type="text"
+  //       className="flex h-10 rounded-md bg-slate-50 bg-opacity-20 p-2 text-sm placeholder:text-white placeholder:opacity-50"
+  //       onKeyDown={handleKeyDown}
+  //       placeholder="Add habits here"
+  //     />
+  //   );
+  // };
+
   const AddHabit = () => {
     const handleKeyDown = (e) => {
       if (e.key === "Enter") {
-        setHabits([...habits, { habitId: Date.now(), habit: e.target.value }]);
-        console.log(completed);
-        console.log(habits);
+        newHabit(e.target.value);
       }
     };
 
@@ -183,12 +201,25 @@ const HabitsSupabase = () => {
     );
   };
 
+  const newHabit = async (habit) => {
+    const supabaseAccessToken = await session.getToken({
+      template: "supabase",
+    });
+    const supabase = await supabaseClient(supabaseAccessToken);
+    const { data, error } = await supabase
+      .from("habits")
+      .insert({ habitId: Date.now(), habit: habit })
+      .select();
+    if (data) {
+      setHabits([...habits, data[0]]);
+    }
+  };
+
   // TODO:
   // Delete habit
   // Rename habit
   // Improve responsivity
   // Dark mode
-  // Change date datatype to match supabase's
   // Add completed item Supabase
   // Add RLS
   // Habit Dashboard
