@@ -81,13 +81,13 @@ const HabitsSupabase = () => {
   const showHabits = habits.map((habit) => (
     <div
       id="habit"
-      className="group flex h-10 items-center justify-between"
+      className="group flex h-10 items-center justify-between max-md:text-sm"
       key={habit.habitId}
     >
       {habit.habit}
 
       <MdDeleteOutline
-        className="hidden text-lg opacity-80 transition-all duration-200 hover:scale-125 hover:cursor-pointer hover:opacity-100 group-hover:block"
+        className="hidden text-lg opacity-80 transition-all duration-200 hover:scale-125 hover:cursor-pointer hover:opacity-100 group-hover:block max-md:text-sm"
         onClick={() => deleteHabit(habit.habitId)}
       />
     </div>
@@ -227,7 +227,7 @@ const HabitsSupabase = () => {
     return (
       <input
         type="text"
-        className="flex h-10 rounded-md bg-slate-50 bg-opacity-20 p-2 text-sm placeholder:text-white placeholder:opacity-50"
+        className="flex h-10 rounded-md bg-slate-50 bg-opacity-20 p-2 text-sm placeholder:text-white placeholder:opacity-50 max-md:text-xs"
         onKeyDown={handleKeyDown}
         placeholder="Add habits here"
       />
@@ -235,17 +235,14 @@ const HabitsSupabase = () => {
   };
 
   // TODO:
-  // Rename habit
   // Improve responsivity
-  // Dark mode
-
   // Add RLS
 
   // Habit Dashboard
   // Choose habit colour
 
   return (
-    <div className="flex w-2/3 gap-5 rounded-lg bg-gradient-to-r from-blue-400 to-purple-300 p-3 font-semibold text-white dark:from-blue-900 dark:to-purple-900">
+    <div className="flex w-2/3 gap-5 rounded-lg bg-gradient-to-r from-blue-400 to-purple-300 p-3 font-semibold text-white max-md:w-11/12 dark:from-blue-900 dark:to-purple-900">
       <div className="flex">
         <div className="flex flex-col gap-5">
           <div className="flex h-10 items-center">{/* Spacer */}</div>
