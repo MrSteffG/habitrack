@@ -21,20 +21,7 @@ const HabitsSupabase = () => {
   const { session } = useSession();
   const dates = datesSinceAugust();
   const [completed, setCompleted] = useState(completedArr);
-  const [habits, setHabits] = useState([
-    {
-      habitId: 0,
-      habit: "Test1",
-    },
-    {
-      habitId: 1,
-      habit: "test2",
-    },
-    {
-      habitId: 2,
-      habit: "test3",
-    },
-  ]);
+  const [habits, setHabits] = useState([]);
 
   const selectCompleted = async () => {
     try {
@@ -81,7 +68,7 @@ const HabitsSupabase = () => {
   const showHabits = habits.map((habit) => (
     <div
       id="habit"
-      className="group flex h-10 items-center justify-between max-md:text-sm"
+      className="group flex h-10 items-center justify-between font-light max-md:text-sm"
       key={habit.habitId}
     >
       {habit.habit}
@@ -100,7 +87,7 @@ const HabitsSupabase = () => {
     const supabase = await supabaseClient(supabaseAccessToken);
     const { data, error } = await supabase
       .from("habits")
-      .insert({ habitId: Date.now(), habit: habit })
+      .insert({ habitId: Date.now(), habit: habit, user_id: session.user.id })
       .select();
     if (data) {
       setHabits([...habits, data[0]]);
@@ -207,9 +194,10 @@ const HabitsSupabase = () => {
       .from("completed")
       .insert({
         id: idToUpdate,
-        done: newData,
         completionDay: day,
         habitId: habit,
+        done: newData,
+        user_id: session.user.id,
       })
       .select();
     if (data) {
@@ -227,7 +215,7 @@ const HabitsSupabase = () => {
     return (
       <input
         type="text"
-        className="flex h-10 rounded-md bg-slate-50 bg-opacity-20 p-2 text-sm placeholder:text-white placeholder:opacity-50 max-md:text-xs"
+        className="flex h-10 rounded-md bg-slate-50 bg-opacity-20 p-1 text-sm font-light placeholder:text-white placeholder:opacity-50 max-md:text-xs"
         onKeyDown={handleKeyDown}
         placeholder="Add habits here"
       />
@@ -235,9 +223,6 @@ const HabitsSupabase = () => {
   };
 
   // TODO:
-  // Improve responsivity
-  // Add RLS
-
   // Habit Dashboard
   // Choose habit colour
 
