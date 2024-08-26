@@ -138,28 +138,36 @@ const HabitsSupabase = () => {
   ));
 
   //toggles done values in completed array item to the opposite boolean
-  const toggleCompletedOff = ({ idToUpdate, newData }) => {
-    setCompleted(
-      completed.map(({ id, completionDay, habitId, done }) =>
-        id === idToUpdate
-          ? { id, done: newData, completionDay, habitId }
-          : { id, done, completionDay, habitId },
-      ),
-    );
-  };
-
-  // Adds a new completed array object with new values & done as true
-  // const toggleCompletedOn = ({ idToUpdate, newData, day, habit }) => {
-  //   setCompleted([
-  //     ...completed,
-  //     {
-  //       id: idToUpdate,
-  //       done: newData,
-  //       completionDay: day,
-  //       habitId: habit,
-  //     },
-  //   ]);
+  // const toggleCompletedOff = ({ idToUpdate, newData }) => {
+  //   setCompleted(
+  //     completed.map(({ id, completionDay, habitId, done }) =>
+  //       id === idToUpdate
+  //         ? { id, done: newData, completionDay, habitId }
+  //         : { id, done, completionDay, habitId },
+  //     ),
+  //   );
   // };
+
+  const toggleCompletedOff = async ({ idToUpdate, newData }) => {
+    const supabaseAccessToken = await session.getToken({
+      template: "supabase",
+    });
+    const supabase = await supabaseClient(supabaseAccessToken);
+    const { data, error } = await supabase
+      .from("completed")
+      .update({ done: newData })
+      .eq("id", idToUpdate)
+      .select();
+    if (data) {
+      setCompleted(
+        completed.map(({ id, completionDay, habitId, done }) =>
+          id === idToUpdate
+            ? { id, done: newData, completionDay, habitId }
+            : { id, done, completionDay, habitId },
+        ),
+      );
+    }
+  };
 
   const toggleCompletedOn = async ({ idToUpdate, newData, day, habit }) => {
     const supabaseAccessToken = await session.getToken({
