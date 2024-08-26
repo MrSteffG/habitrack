@@ -107,7 +107,7 @@ const HabitsSupabase = () => {
           ) {
             return (
               <div
-                className="flex h-10 w-10 items-center justify-center rounded-sm bg-green-200"
+                className="flex h-10 w-10 items-center justify-center rounded-sm bg-green-200 dark:bg-green-400"
                 onClick={() =>
                   toggleCompletedOff({
                     idToUpdate: completed[i].id,
@@ -136,17 +136,6 @@ const HabitsSupabase = () => {
       })}
     </div>
   ));
-
-  //toggles done values in completed array item to the opposite boolean
-  // const toggleCompletedOff = ({ idToUpdate, newData }) => {
-  //   setCompleted(
-  //     completed.map(({ id, completionDay, habitId, done }) =>
-  //       id === idToUpdate
-  //         ? { id, done: newData, completionDay, habitId }
-  //         : { id, done, completionDay, habitId },
-  //     ),
-  //   );
-  // };
 
   const toggleCompletedOff = async ({ idToUpdate, newData }) => {
     const supabaseAccessToken = await session.getToken({
@@ -220,17 +209,17 @@ const HabitsSupabase = () => {
   };
 
   // TODO:
-  // Delete habit
   // Rename habit
   // Improve responsivity
   // Dark mode
-  // Add completed item Supabase
+
   // Add RLS
+
   // Habit Dashboard
   // Choose habit colour
 
   return (
-    <div className="flex w-2/3 gap-5 rounded-lg bg-gradient-to-r from-blue-400 to-purple-300 p-3 font-semibold text-white">
+    <div className="flex w-2/3 gap-5 rounded-lg bg-gradient-to-r from-blue-400 to-purple-300 p-3 font-semibold text-white dark:from-blue-900 dark:to-purple-900">
       <div className="flex">
         <div className="flex flex-col gap-5">
           <div className="flex h-10 items-center">{/* Spacer */}</div>
