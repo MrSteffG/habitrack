@@ -243,8 +243,6 @@ const Habits = () => {
 
   // TODO:
 
-  // Cleanup & seperate into components
-  // Migrate to typsescript
   // Loading icon
   // Habit Dashboard
   // Choose habit colour
@@ -252,7 +250,7 @@ const Habits = () => {
   // New favicon
 
   return (
-    <div className="flex w-2/3 gap-5 rounded-lg bg-gradient-to-r from-blue-400 to-purple-300 p-3 font-semibold text-white dark:from-blue-900 dark:to-purple-900 max-md:w-11/12">
+    <div className="flex w-2/3 gap-5 rounded-lg bg-gradient-to-r from-blue-400 to-purple-300 p-3 font-semibold text-white dark:from-blue-900 dark:to-purple-900 max-md:w-11/12 max-md:gap-1">
       <div className="flex">
         <div className="flex flex-col gap-5">
           <div className="flex h-10 items-center">{/* Spacer */}</div>

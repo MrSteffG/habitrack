@@ -4,7 +4,7 @@ import Habits from "./components/Habits";
 
 export default function Home() {
   return (
-    <div className="flex">
+    <div className="flex w-full">
       <SignedOut>
         <div className="flex min-h-screen w-screen">
           <Hero />
