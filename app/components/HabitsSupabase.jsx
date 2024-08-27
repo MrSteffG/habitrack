@@ -21,20 +21,7 @@ const HabitsSupabase = () => {
   const { session } = useSession();
   const dates = datesSinceAugust();
   const [completed, setCompleted] = useState(completedArr);
-  const [habits, setHabits] = useState([
-    {
-      habitId: 0,
-      habit: "Test1",
-    },
-    {
-      habitId: 1,
-      habit: "test2",
-    },
-    {
-      habitId: 2,
-      habit: "test3",
-    },
-  ]);
+  const [habits, setHabits] = useState([]);
 
   const selectCompleted = async () => {
     try {
@@ -63,12 +50,10 @@ const HabitsSupabase = () => {
 
       const supabase = await supabaseClient(supabaseAccessToken);
       const { data: habits, error } = await supabase.from("habits").select("*");
-      // console.log(habits);
       setHabits(habits);
     } catch (error) {
       console.log("Catch statement, something went wrong" + error);
     } finally {
-      // console.log("ho finito");
     }
   };
 
@@ -237,12 +222,14 @@ const HabitsSupabase = () => {
 
   // TODO:
 
+  // Build a welcome page
   // Cleanup & seperate into components
   // Migrate to typsescript
   // Loading icon
   // Habit Dashboard
   // Choose habit colour
   // Calendar View
+  // New favicon
 
   return (
     <div className="flex w-2/3 gap-5 rounded-lg bg-gradient-to-r from-blue-400 to-purple-300 p-3 font-semibold text-white dark:from-blue-900 dark:to-purple-900 max-md:w-11/12">

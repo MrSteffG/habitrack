@@ -21,7 +21,7 @@ const Navbar = () => {
           </button>
           <SignedOut>
             <SignInButton>
-              <h3 className="text-lg font-semibold transition-all hover:scale-105">
+              <h3 className="text-lg font-semibold transition-all hover:scale-105 hover:cursor-pointer">
                 Log in
               </h3>
             </SignInButton>
