@@ -20,8 +20,8 @@ const Habits = () => {
   //Use State variables
   const { session } = useSession();
   const dates = datesSinceAugust();
-  const [completed, setCompleted] = useState(completedArr);
-  const [habits, setHabits] = useState([]);
+  const [completed, setCompleted] = useState<any[]>(completedArr);
+  const [habits, setHabits] = useState<any[]>([]);
 
   const selectCompleted = async () => {
     try {
@@ -34,7 +34,7 @@ const Habits = () => {
         .from("completed")
         .select("*");
       // console.log(completed);
-      setCompleted(completed);
+      setCompleted(completed!);
     } catch (error) {
       console.log("Catch statement, something went wrong" + error);
     }
@@ -48,7 +48,8 @@ const Habits = () => {
 
       const supabase = await supabaseClient(supabaseAccessToken);
       const { data: habits, error } = await supabase.from("habits").select("*");
-      setHabits(habits);
+      const newHabits: any = habits;
+      setHabits(newHabits);
     } catch (error) {
       console.log("Catch statement, something went wrong" + error);
     }
@@ -61,38 +62,39 @@ const Habits = () => {
 
   //Shows the habits in Habits Array
   const ShowHabits = () => {
-    return habits.map((habit) => (
+    return habits.map(({ habit, habitId }) => (
       <div
         id="habit"
         className="group flex h-10 items-center justify-between font-light max-md:text-sm"
-        key={habit.habitId}
+        key={habitId}
       >
-        {habit.habit}
+        {habit}
 
         <MdDeleteOutline
           className="hidden text-lg opacity-80 transition-all duration-200 hover:scale-125 hover:cursor-pointer hover:opacity-100 group-hover:block max-md:text-sm"
-          onClick={() => deleteHabit(habit.habitId)}
+          onClick={() => deleteHabit(habitId)}
         />
       </div>
     ));
   };
 
-  const newHabit = async (habit) => {
-    const supabaseAccessToken = await session.getToken({
+  const newHabit = async (habit: any) => {
+    const supabaseAccessToken = await session!.getToken({
       template: "supabase",
     });
     const supabase = await supabaseClient(supabaseAccessToken);
     const { data, error } = await supabase
       .from("habits")
-      .insert({ habitId: Date.now(), habit: habit, user_id: session.user.id })
+      .insert({ habitId: Date.now(), habit: habit, user_id: session!.user.id })
       .select();
     if (data) {
-      setHabits([...habits, data[0]]);
+      const newHabits: any = [...habits, data[0]];
+      setHabits(newHabits);
     }
   };
 
-  const deleteHabit = async (habitId) => {
-    const supabaseAccessToken = await session.getToken({
+  const deleteHabit = async (habitId: any) => {
+    const supabaseAccessToken = await session!.getToken({
       template: "supabase",
     });
     const supabase = await supabaseClient(supabaseAccessToken);
@@ -123,13 +125,13 @@ const Habits = () => {
   //For each habit, maps through the dates since august to display the squares and for each date that is the same as a completed item,
   //checks the done value to determine square properties.
   const ShowSquares = () => {
-    return habits.map((habit) => (
-      <div className="flex h-10 w-full items-center gap-1" key={habit.habitId}>
+    return habits.map(({ habitId }) => (
+      <div className="flex h-10 w-full items-center gap-1" key={habitId}>
         {dates.map((date) => {
           for (let i = 0; i < completed.length; i++) {
             if (
-              (completed[i].completionDay === date.dateStr) &
-              (completed[i].habitId === habit.habitId) &
+              completed[i].completionDay === date.dateStr &&
+              completed[i].habitId === habitId &&
               completed[i].done
             ) {
               return (
@@ -155,7 +157,7 @@ const Habits = () => {
                   idToUpdate: Date.now(),
                   newData: true,
                   day: date.dateStr,
-                  habit: habit.habitId,
+                  habit: habitId,
                 })
               }
             ></div>
@@ -165,8 +167,14 @@ const Habits = () => {
     ));
   };
 
-  const toggleCompletedOff = async ({ idToUpdate, newData }) => {
-    const supabaseAccessToken = await session.getToken({
+  const toggleCompletedOff = async ({
+    idToUpdate,
+    newData,
+  }: {
+    idToUpdate: number;
+    newData: boolean;
+  }) => {
+    const supabaseAccessToken = await session!.getToken({
       template: "supabase",
     });
     const supabase = await supabaseClient(supabaseAccessToken);
@@ -186,8 +194,18 @@ const Habits = () => {
     }
   };
 
-  const toggleCompletedOn = async ({ idToUpdate, newData, day, habit }) => {
-    const supabaseAccessToken = await session.getToken({
+  const toggleCompletedOn = async ({
+    idToUpdate,
+    newData,
+    day,
+    habit,
+  }: {
+    idToUpdate: number;
+    newData: boolean;
+    day: string;
+    habit: string;
+  }) => {
+    const supabaseAccessToken = await session!.getToken({
       template: "supabase",
     });
     const supabase = await supabaseClient(supabaseAccessToken);
@@ -198,7 +216,7 @@ const Habits = () => {
         completionDay: day,
         habitId: habit,
         done: newData,
-        user_id: session.user.id,
+        user_id: session!.user.id,
       })
       .select();
     if (data) {
@@ -207,7 +225,7 @@ const Habits = () => {
   };
 
   const AddHabit = () => {
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: any) => {
       if (e.key === "Enter") {
         newHabit(e.target.value);
       }
