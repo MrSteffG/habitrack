@@ -1,11 +1,9 @@
 const datesSinceAugust = () => {
-  const today = new Date();
-  const startOfAug = new Date(2024, 7, 1);
-  const difference = today - startOfAug;
+  const today: Date = new Date();
+  const startOfAug: Date = new Date(2024, 7, 1);
+  const difference: any = today.valueOf() - startOfAug.valueOf();
   const diffDays = Math.floor(difference / (1000 * 60 * 60 * 24));
-  // console.log(
-  //   `The date is ${today} and the start of the year is ${startOfAug}, the diference is ${diffDays}`,
-  // );
+
   let dateToPush = startOfAug;
   let dateArr = [];
 

@@ -1,7 +1,6 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
-
-import HabitsSupabase from "./components/HabitsSupabase";
 import Hero from "./components/Hero";
+import Habits from "./components/Habits";
 
 export default function Home() {
   return (
@@ -13,7 +12,7 @@ export default function Home() {
       </SignedOut>
       <SignedIn>
         <div className="mt-36 flex h-full w-full flex-col items-center justify-center gap-10">
-          <HabitsSupabase />
+          <Habits />
         </div>
       </SignedIn>
     </div>

@@ -26,7 +26,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/components/Habits.jsx"
+    "app/components/HabitsOld.jsx"
   ],
   "exclude": ["node_modules"]
 }
