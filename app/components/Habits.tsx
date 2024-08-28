@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import datesSinceAugust from "./dateArr";
-import { completedArr } from "./data";
+
 import supabaseClient from "../../config/supabaseClient";
 import {
   SignedIn,
@@ -14,55 +14,24 @@ import {
 } from "@clerk/nextjs";
 import { MdDeleteOutline } from "react-icons/md";
 
-const Habits = () => {
-  const { getToken } = useAuth();
-
+const Habits = ({
+  habits,
+  setHabits,
+  completed,
+  setCompleted,
+}: {
+  habits: any;
+  setHabits: any;
+  completed: any;
+  setCompleted: any;
+}) => {
   //Use State variables
   const { session } = useSession();
   const dates = datesSinceAugust();
-  const [completed, setCompleted] = useState<any[]>(completedArr);
-  const [habits, setHabits] = useState<any[]>([]);
-
-  const selectCompleted = async () => {
-    try {
-      const supabaseAccessToken = await getToken({
-        template: "supabase",
-      });
-
-      const supabase = await supabaseClient(supabaseAccessToken);
-      const { data: completed, error } = await supabase
-        .from("completed")
-        .select("*");
-      // console.log(completed);
-      setCompleted(completed!);
-    } catch (error) {
-      console.log("Catch statement, something went wrong" + error);
-    }
-  };
-
-  const selectHabits = async () => {
-    try {
-      const supabaseAccessToken = await getToken({
-        template: "supabase",
-      });
-
-      const supabase = await supabaseClient(supabaseAccessToken);
-      const { data: habits, error } = await supabase.from("habits").select("*");
-      const newHabits: any = habits;
-      setHabits(newHabits);
-    } catch (error) {
-      console.log("Catch statement, something went wrong" + error);
-    }
-  };
-
-  useEffect(() => {
-    selectHabits();
-    selectCompleted();
-  }, []);
 
   //Shows the habits in Habits Array
   const ShowHabits = () => {
-    return habits.map(({ habit, habitId }) => (
+    return habits.map(({ habit, habitId }: { habit: any; habitId: any }) => (
       <div
         id="habit"
         className="group flex h-10 items-center justify-between font-light max-md:text-sm"
@@ -105,7 +74,7 @@ const Habits = () => {
     if (error) {
       console.log(error);
     } else {
-      setHabits(habits.filter((habit) => habit.habitId !== habitId));
+      setHabits(habits.filter((habit: any) => habit.habitId !== habitId));
     }
   };
 
@@ -125,7 +94,7 @@ const Habits = () => {
   //For each habit, maps through the dates since august to display the squares and for each date that is the same as a completed item,
   //checks the done value to determine square properties.
   const ShowSquares = () => {
-    return habits.map(({ habitId }) => (
+    return habits.map(({ habitId }: { habitId: string }) => (
       <div className="flex h-10 w-full items-center gap-1" key={habitId}>
         {dates.map((date) => {
           for (let i = 0; i < completed.length; i++) {
@@ -185,10 +154,21 @@ const Habits = () => {
       .select();
     if (data) {
       setCompleted(
-        completed.map(({ id, completionDay, habitId, done }) =>
-          id === idToUpdate
-            ? { id, done: newData, completionDay, habitId }
-            : { id, done, completionDay, habitId },
+        completed.map(
+          ({
+            id,
+            completionDay,
+            habitId,
+            done,
+          }: {
+            id: number;
+            completionDay: string;
+            habitId: number;
+            done: boolean;
+          }) =>
+            id === idToUpdate
+              ? { id, done: newData, completionDay, habitId }
+              : { id, done, completionDay, habitId },
         ),
       );
     }
@@ -243,7 +223,6 @@ const Habits = () => {
 
   // TODO:
   // Loading icon
-  // Move getters into page
   // Habit Dashboard
   // Choose habit colour
   // Calendar View
