@@ -242,8 +242,8 @@ const Habits = () => {
   };
 
   // TODO:
-
   // Loading icon
+  // Move getters into page
   // Habit Dashboard
   // Choose habit colour
   // Calendar View
