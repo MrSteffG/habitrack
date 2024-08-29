@@ -227,6 +227,38 @@ const Habits = ({
   // Choose habit colour
   // Calendar View
   // New favicon
+  const counterArr: any = [];
+
+  const calculateTotals = () => {
+    console.log(habits);
+
+    for (let i = 0; i < habits.length; i++) {
+      let counter = 0;
+      for (let j = 0; j < dates.length; j++) {
+        for (let c = 0; c < completed.length; c++) {
+          if (
+            completed[c].completionDay === dates[j].dateStr &&
+            completed[c].habitId === habits[i].habitId &&
+            completed[c].done === true
+          ) {
+            counter++;
+          }
+        }
+      }
+
+      counterArr.push({ habit: habits[i].habit, count: counter });
+      console.log(counterArr);
+    }
+  };
+  calculateTotals();
+
+  const showTotals = counterArr.map(
+    ({ habit, count }: { habit: string; count: number }) => (
+      <div key={habit} className="flex h-10 items-center justify-center">
+        {count}
+      </div>
+    ),
+  );
 
   return (
     <div className="flex w-2/3 gap-5 rounded-lg bg-gradient-to-r from-blue-400 to-purple-300 p-3 font-semibold text-white dark:from-blue-900 dark:to-purple-900 max-md:w-11/12 max-md:gap-1">
@@ -244,6 +276,10 @@ const Habits = ({
           </div>
           <ShowSquares />
         </div>
+      </div>
+      <div className="flex flex-col gap-5">
+        <h3 className="flex h-10 items-center justify-center">Total</h3>
+        {showTotals}
       </div>
     </div>
   );
