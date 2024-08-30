@@ -271,10 +271,6 @@ const Habits = ({
           <ShowSquares />
         </div>
       </div>
-      <div className="flex flex-col gap-5">
-        <h3 className="flex h-10 items-center justify-center">Total</h3>
-        {showTotals}
-      </div>
     </div>
   );
 };
