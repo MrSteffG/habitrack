@@ -221,12 +221,6 @@ const Habits = ({
     );
   };
 
-  // TODO:
-  // Loading icon
-  // Habit Dashboard
-  // Choose habit colour
-  // Calendar View
-  // New favicon
   const counterArr: any = [];
 
   const calculateTotals = () => {

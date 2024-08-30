@@ -14,6 +14,8 @@ import {
   useSession,
 } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
+import DashboardPanel from "./components/LeftSidePanel";
+import LeftSidePanel from "./components/LeftSidePanel";
 
 export default function Home() {
   const { getToken } = useAuth();
@@ -58,22 +60,32 @@ export default function Home() {
     selectCompleted();
   }, []);
 
+  // TODO:
+  // Loading icon
+  // Main Dashboard right (Calendar view) (Stats)
+  // Dashboard left
+  // Clear old completed logs
+  // Choose habit colour
+  // Calendar View
+  // New favicon
+
   return (
-    <div className="flex w-full">
+    <div className="flex h-screen w-full">
       <SignedOut>
         <div className="flex min-h-screen w-screen">
           <Hero />
         </div>
       </SignedOut>
       <SignedIn>
-        <div className="mt-36 flex h-full w-full flex-col items-center justify-center gap-10">
-          <Dashboard habits={habits} completed={completed} />
+        <div className="mt-16 flex h-full w-full items-center justify-center gap-10">
+          <LeftSidePanel />
           <Habits
             habits={habits}
             setHabits={setHabits}
             completed={completed}
             setCompleted={setCompleted}
           />
+          <Dashboard habits={habits} completed={completed} />
         </div>
       </SignedIn>
     </div>
