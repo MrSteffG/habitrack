@@ -224,8 +224,6 @@ const Habits = ({
   const counterArr: any = [];
 
   const calculateTotals = () => {
-    console.log(habits);
-
     for (let i = 0; i < habits.length; i++) {
       let counter = 0;
       for (let j = 0; j < dates.length; j++) {
@@ -241,7 +239,6 @@ const Habits = ({
       }
 
       counterArr.push({ habit: habits[i].habit, count: counter });
-      console.log(counterArr);
     }
   };
   calculateTotals();

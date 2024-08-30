@@ -62,7 +62,7 @@ export default function Home() {
 
   // TODO:
   // Loading icon
-  // Main Dashboard right (Calendar view) (Stats)
+  // Main Dashboard right Stats, Best streak & Completion rate
   // Dashboard left
   // Re add responsivity
   // Clear old completed logs

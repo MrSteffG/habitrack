@@ -20,33 +20,36 @@ const Dashboard = ({ habits, completed }: { habits: any; completed: any }) => {
   };
 
   const calculateBestStreak = () => {
-    console.log(habits);
-    const counterArr = [];
+    const streakArr = [];
+    const dateArrLength = dateArr.length - 1;
     for (let i = 0; i < habits.length; i++) {
       let counter = 0;
-      for (let j = 0; j < dateArr.length; j++) {
-        for (let c = 0; c < completed.length; c++) {
+      dateArr: for (let j = dateArrLength; j > 0; j--) {
+        completed: for (let c = 0; c < completed.length; c++) {
           if (
             completed[c].completionDay === dateArr[j].dateStr &&
             completed[c].habitId === habits[i].habitId &&
             completed[c].done === true
           ) {
             counter++;
+          } else if (
+            completed[c].completionDay === dateArr[j].dateStr &&
+            completed[c].habitId === habits[i].habitId &&
+            completed[c].done === false
+          ) {
+            break dateArr;
           }
         }
       }
-
-      counterArr.push({ habit: habits[i].habit, count: counter });
-      console.log(counterArr);
+      streakArr.push(counter);
     }
-    return "Add return here";
+    console.log(streakArr);
+    return "soon";
   };
 
   const counterArr: any = [];
 
   const calculateTotals = () => {
-    console.log(habits);
-
     for (let i = 0; i < habits.length; i++) {
       let counter = 0;
       for (let j = 0; j < dateArr.length; j++) {
@@ -62,7 +65,6 @@ const Dashboard = ({ habits, completed }: { habits: any; completed: any }) => {
       }
 
       counterArr.push({ habit: habits[i].habit, count: counter });
-      console.log(counterArr);
     }
   };
   calculateTotals();
@@ -105,9 +107,6 @@ const Dashboard = ({ habits, completed }: { habits: any; completed: any }) => {
           <h3>Best streak: </h3>
 
           {calculateBestStreak()}
-        </div>
-        <div className="flex flex-col items-center justify-center">
-          Completion Rate
         </div>
         <h2 className="flex self-center font-semibold">Totals</h2>
 
