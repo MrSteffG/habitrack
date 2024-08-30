@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import datesSinceAugust from "./dateArr";
+import {
+  TbLayoutSidebarLeftCollapse,
+  TbLayoutSidebarRightCollapse,
+} from "react-icons/tb";
 
 const Dashboard = ({ habits, completed }: { habits: any; completed: any }) => {
   const [dateArr, setDateArr] = useState<any[]>(datesSinceAugust);
+  const [toggleOpen, setToggleOpen] = useState(true);
 
   const countCompleted = () => {
     let counter = 0;
@@ -14,28 +19,28 @@ const Dashboard = ({ habits, completed }: { habits: any; completed: any }) => {
     return counter;
   };
 
-  //   const calculateBestStreak = () => {
-  //     console.log(habits);
-  //     const counterArr = [];
-  //     for (let i = 0; i < habits.length; i++) {
-  //       let counter = 0;
-  //       for (let j = 0; j < dateArr.length; j++) {
-  //         for (let c = 0; c < completed.length; c++) {
-  //           if (
-  //             completed[c].completionDay === dateArr[j].dateStr &&
-  //             completed[c].habitId === habits[i].habitId &&
-  //             completed[c].done === true
-  //           ) {
-  //             counter++;
-  //           }
-  //         }
-  //       }
+  const calculateBestStreak = () => {
+    console.log(habits);
+    const counterArr = [];
+    for (let i = 0; i < habits.length; i++) {
+      let counter = 0;
+      for (let j = 0; j < dateArr.length; j++) {
+        for (let c = 0; c < completed.length; c++) {
+          if (
+            completed[c].completionDay === dateArr[j].dateStr &&
+            completed[c].habitId === habits[i].habitId &&
+            completed[c].done === true
+          ) {
+            counter++;
+          }
+        }
+      }
 
-  //       counterArr.push({ habit: habits[i].habit, count: counter });
-  //       console.log(counterArr);
-  //     }
-  //     return "Add return here";
-  //   };
+      counterArr.push({ habit: habits[i].habit, count: counter });
+      console.log(counterArr);
+    }
+    return "Add return here";
+  };
 
   const counterArr: any = [];
 
@@ -71,10 +76,27 @@ const Dashboard = ({ habits, completed }: { habits: any; completed: any }) => {
     ),
   );
 
-  return (
-    <div className="relative flex h-full w-1/3 flex-col gap-5 border-l border-slate-200 bg-slate-100 p-5 text-black">
+  const Closed = () => {
+    return (
       <div className="flex flex-col items-start justify-around gap-5">
-        <h2 className="flex self-center text-xl font-semibold">Dashboard</h2>
+        <TbLayoutSidebarLeftCollapse
+          className="text-2xl opacity-50 hover:cursor-pointer"
+          onClick={() => setToggleOpen(!toggleOpen)}
+        />
+      </div>
+    );
+  };
+
+  const Open = () => {
+    return (
+      <div className="flex flex-col items-start justify-around gap-5">
+        <TbLayoutSidebarRightCollapse
+          className="text-2xl opacity-50 hover:cursor-pointer"
+          onClick={() => setToggleOpen(!toggleOpen)}
+        />
+        <h2 className="flex w-full items-center justify-center text-xl font-semibold">
+          DASHBOARD
+        </h2>
         <div className="flex w-full items-center justify-between">
           <h3>Total Completed: </h3>
           <h3>{countCompleted()}</h3>
@@ -82,7 +104,7 @@ const Dashboard = ({ habits, completed }: { habits: any; completed: any }) => {
         <div className="flex w-full items-center justify-between">
           <h3>Best streak: </h3>
 
-          {/* {calculateBestStreak()} */}
+          {calculateBestStreak()}
         </div>
         <div className="flex flex-col items-center justify-center">
           Completion Rate
@@ -91,6 +113,14 @@ const Dashboard = ({ habits, completed }: { habits: any; completed: any }) => {
 
         {showTotals}
       </div>
+    );
+  };
+
+  return (
+    <div
+      className={`relative flex h-screen ${toggleOpen ? "w-1/5" : "w-16"} flex-col gap-5 border-l border-slate-200 bg-slate-100 p-5 text-black`}
+    >
+      {toggleOpen ? <Open /> : <Closed />}
     </div>
   );
 };
