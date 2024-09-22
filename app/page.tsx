@@ -21,7 +21,7 @@ export default function Home() {
   const { getToken } = useAuth();
   const { session } = useSession();
   const [completed, setCompleted] = useState<any[]>([]);
-  const [habits, setHabits] = useState<any[]>([]);
+  const [habits, setHabits] = useState<any[]>([{}]);
 
   const selectCompleted = async () => {
     try {
@@ -79,13 +79,15 @@ export default function Home() {
       </SignedOut>
       <SignedIn>
         <div className="mt-16 flex h-full w-full items-center justify-between gap-10">
-          <LeftSidePanel />
+          {/* <LeftSidePanel /> */}
+          <div className="">{/* Secret Div shh. */}</div>
           <Habits
             habits={habits}
             setHabits={setHabits}
             completed={completed}
             setCompleted={setCompleted}
           />
+
           <Dashboard habits={habits} completed={completed} />
         </div>
       </SignedIn>

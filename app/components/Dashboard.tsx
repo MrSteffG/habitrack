@@ -92,13 +92,14 @@ const Dashboard = ({ habits, completed }: { habits: any; completed: any }) => {
   const Open = () => {
     return (
       <div className="flex flex-col items-start justify-around gap-5">
-        <TbLayoutSidebarRightCollapse
-          className="text-2xl opacity-50 hover:cursor-pointer"
-          onClick={() => setToggleOpen(!toggleOpen)}
-        />
-        <h2 className="flex w-full items-center justify-center text-xl font-semibold">
-          DASHBOARD
-        </h2>
+        <div className="flex w-full items-center justify-between text-xl font-semibold">
+          <h2>DASHBOARD</h2>
+          <TbLayoutSidebarRightCollapse
+            className="text-2xl opacity-50 hover:cursor-pointer"
+            onClick={() => setToggleOpen(!toggleOpen)}
+          />
+        </div>
+
         <div className="flex w-full items-center justify-between">
           <h3>Total Completed: </h3>
           <h3>{countCompleted()}</h3>
