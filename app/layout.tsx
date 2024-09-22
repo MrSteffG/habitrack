@@ -23,7 +23,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={montserrat.className}>
-          <div className="flex min-h-screen w-full flex-col items-center bg-slate-50 dark:bg-zinc-900 dark:text-zinc-200">
+          <div className="flex min-h-screen w-full flex-col items-center bg-slate-50 dark:bg-zinc-800 dark:text-zinc-200">
             <Navbar />
             {children}
             <Footer />

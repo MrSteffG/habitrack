@@ -80,7 +80,7 @@ export default function Home() {
       <SignedIn>
         <div className="mt-16 flex h-full w-full items-center justify-between gap-10">
           {/* <LeftSidePanel /> */}
-          <div className="">{/* Secret Div shh. */}</div>
+          <div className="max-md:hidden">{/* Secret Div shh. */}</div>
           <Habits
             habits={habits}
             setHabits={setHabits}

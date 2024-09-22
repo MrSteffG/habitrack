@@ -10,7 +10,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="fixed z-10 flex h-16 w-full items-center justify-center border-b border-slate-100 bg-slate-50 bg-opacity-80 backdrop-blur-sm dark:border-zinc-500 dark:bg-zinc-900 dark:bg-opacity-60">
+    <div className="fixed z-10 flex h-16 w-full items-center justify-center border-b border-slate-200 bg-slate-50 bg-opacity-80 backdrop-blur-sm dark:border-zinc-500 dark:bg-zinc-900 dark:bg-opacity-60">
       <div className="flex w-2/3 items-center justify-between">
         <h1 className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-2xl font-extrabold text-transparent max-sm:hidden">
           HABITRACK.

@@ -80,7 +80,7 @@ const Dashboard = ({ habits, completed }: { habits: any; completed: any }) => {
 
   const Closed = () => {
     return (
-      <div className="flex flex-col items-start justify-around gap-5">
+      <div className="flex flex-col items-start justify-around gap-5 dark:text-stone-100">
         <TbLayoutSidebarLeftCollapse
           className="text-2xl opacity-50 hover:cursor-pointer"
           onClick={() => setToggleOpen(!toggleOpen)}
@@ -91,11 +91,11 @@ const Dashboard = ({ habits, completed }: { habits: any; completed: any }) => {
 
   const Open = () => {
     return (
-      <div className="flex flex-col items-start justify-around gap-5">
+      <div className="flex flex-col items-start justify-around gap-5 dark:text-stone-100">
         <div className="flex w-full items-center justify-between text-xl font-semibold">
           <h2>DASHBOARD</h2>
           <TbLayoutSidebarRightCollapse
-            className="text-2xl opacity-50 hover:cursor-pointer"
+            className="text-2xl opacity-75 hover:cursor-pointer"
             onClick={() => setToggleOpen(!toggleOpen)}
           />
         </div>
@@ -118,7 +118,7 @@ const Dashboard = ({ habits, completed }: { habits: any; completed: any }) => {
 
   return (
     <div
-      className={`relative flex h-screen ${toggleOpen ? "w-1/5" : "w-16"} flex-col gap-5 border-l border-slate-200 bg-slate-100 p-5 text-black`}
+      className={`relative flex h-screen ${toggleOpen ? "w-1/5" : "w-16"} flex-col gap-5 border-l border-slate-200 bg-slate-50 p-5 text-black dark:border-zinc-500 dark:bg-zinc-900`}
     >
       {toggleOpen ? <Open /> : <Closed />}
     </div>
